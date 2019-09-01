@@ -35,6 +35,24 @@
         }
         return shuffle(cards);
       };
+
+      /* This function set randomly images to the cards displayed on the screen on render.
+        */
+        function CardsShuffleInGrid2() {          
+        const images = ["BackCard.png"];
+        let cards = [];
+        while (cards.length < 24) {
+          const index = Math.floor(Math.random() * images.length);
+          const card = {
+            image: images.splice(index, 1)[0],
+            guessedRight: false
+          }
+          cards.push(card);
+          cards.push({...card}) //card clone: This is useful to have another reference of the object
+          //console.log(card.image)
+        }
+        return shuffle(cards);
+      };
       
       
               
@@ -54,19 +72,44 @@
         }
       }
 
-      class Card extends React.Component {        
+      class Card extends React.Component {      
+        constructor(props) {
+          super(props)
+          this.state = {
+            side: "cardback"
+          };
+
+        }
+
+        handleClick(){
+          if (this.state.side == "cardfront") {
+            this.setState({
+              side: "cardback"
+            });
+          } else if (this.state.side == "cardback") {
+            this.setState({
+              side: "cardfront"
+            });
+          }
+
+        }
+
         render() {         
           return (
-            <div className="Card">
-             
-              <div className="CardFront">
-                <img src ={`CardImages/${this.props.image}`}/>
-              </div>
-                
-              <div className="CardBack">
-                <img src = "CardImages/CardBack.png"/>
+            <div className="Card">            
+              <div onClick={this.handleClick.bind(this)}>
+              {
+                this.state.side == "cardfront" ? (
+                  <div className="CardFront">
+                    <img className="OnePunchCharacter" src ={`CardImages/${this.props.image}`}/>
+                  </div>
+                ) : (
+                  <div className="CardBack" >
+                    <img className="OnePunchLogo" src = "CardImages/CardBack.png"/>
+                  </div>   
+                )
+              }
               </div>            
-            
             </div>
           )
         }
@@ -82,10 +125,10 @@
               //cards.map((card) => <Card></Card>)           
               this.props.deckOfCards.map((card, index) =>
                 //const isBeingCompared = this.props.selectedMatchingCards.indexOf(card) > -1;
-                <Card image={card.image}
-                //isBeingCompared = {isBeingCompared}
-                />
-              ) //image defined in class Card
+                <Card image={card.image} 
+                /*key={index}  isBeingCompared = {isBeingCompared} selectCard={() => this.props.selectCard(card)} guessedRight={card.guessedRight}*/
+                />  
+              ) //image defined in cardsShuffleInGrid
               
             }
             </div>
@@ -100,8 +143,8 @@
         const deckOfCards = CardsShuffleInGrid();
         return{
           deckOfCards,
-          //selectedMatchingCards: [],
-          //isComparing: false
+          selectedMatchingCards: [],
+          isComparing: false
         };
       }
 
@@ -112,14 +155,7 @@
           this.state = getInitState();        
         }        
 
-        handleClick(name,index){
-
-
-          $('.card').click(function(){
-            $(this).toggleClass('flip');
-          });
-
-        }
+        
         
 
         render() {
@@ -128,7 +164,7 @@
               <div >
                 <HeaderBar/>
               </div>
-              <div >
+              <div onClick={this.handleClick} >
                 <CardsGrid
                 deckOfCards={this.state.deckOfCards} 
                 selectedMatchingCards = {this.state.selectedMatchingCards}
@@ -139,7 +175,7 @@
           );       
         }
 
-        //Selecting the cards
+      //Selecting the cards
         selectCard(card){
           if(this.state.isComparing || this.state.selectedMatchingCards.indexOf(card) > -1 || card.guessedRight)
           {
