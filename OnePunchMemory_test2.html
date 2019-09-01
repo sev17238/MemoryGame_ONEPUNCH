@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>OnePunchMan_MemoryGame</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link rel="stylesheet" href="Lab6Style.css">
+  </head>  
+  <body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+      // Modified Shuffle by Chris Coyier
+      // https://css-tricks.com/snippets/javascript/shuffle-array/
+      function shuffle(o) {
+        for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+        return o;
+      };
+
+      //const maxNumbreOfCards = 20;
+      /* This function set randomly images to the cards displayed on the screen on render.
+        */
+      function CardsShuffleInGrid() {          
+        const images = ['Boros.png','DeepSeaKing.png','Garou.png','Genos.png','King.png','Saitama.png','SilverFang.png','Sonic.png','Suiryu.png','Tatsumaki.png'];
+        let cards = [];
+        while (cards.length < 20) {
+          const index = Math.floor(Math.random() * images.length);
+          const card = {
+            image: images.splice(index, 1)[0],
+            guessedRight: false
+          }
+          cards.push(card);
+          cards.push({...card}) //card clone: This is useful to have another reference of the object
+        }
+        return shuffle(cards);
+      };
+
+              
+      class HeaderBar extends React.Component{
+        render(){
+          return(
+            <div>
+            <header>
+              <div className="title">One Punch Memory</div>
+              <div>
+                <button className="restartButton">Reset Game</button>
+              </div>
+              <div className="moveCount">Movements: </div>
+            </header>
+            </div>
+          )
+        }
+      }
+
+      class Card extends React.Component {
+        
+        render() {         
+          return (
+            <div className="Card">
+            <img src = {"CardImages/Garou.png"} />
+            </div>
+          )
+        }
+      }
+
+      class CardsGrid extends React.Component{
+        render(){
+          const cards = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+          return(
+          <div className="firstDiv">
+            <div className="grid-container">                
+            {
+              cards.map((card) => <Card></Card>)           
+              //this.props.InitCards.map((card) => <Card image={card.image}/>); //image defined in class Card
+            }
+            </div>
+          </div>
+          )
+        }
+      }
+
+      /* This function has the initState of the cards inside the grid.
+      */
+      const getInitState = () => {
+        const InitCards = CardsShuffleInGrid();
+        return{
+          InitCards
+        };
+      }
+
+      class Game extends React.Component {
+        constructor(props) {
+          super(props)         
+
+          this.state = getInitState();
+          
+        }        
+
+        render() {
+          return (
+            <div>
+              <div >
+                <HeaderBar/>
+              </div>
+              <div >
+                <CardsGrid />
+              </div>
+            </div>
+          )
+
+          /*return (            
+            <div >
+              <HeaderBar/>
+              <div className="firstDiv">
+                <div className="grid-container">               
+                  <div className="grid-item"><Card/></div>
+                  <div className="grid-item"><Card/></div>
+                  <div className="grid-item"><Card/></div>
+                  <div className="grid-item"><Card/></div>   
+                  <div className="grid-item"><Card/></div>
+
+                  <div className="grid-item"><Card/></div>
+                  <div className="grid-item"><Card/></div>
+                  <div className="grid-item"><Card/></div>                      
+                  <div className="grid-item"><Card/></div>
+                  <div className="grid-item"><Card/></div>
+
+                  <div className="grid-item"><Card/></div>
+                  <div className="grid-item"><Card/></div>   
+                  <div className="grid-item"><Card/></div>
+                  <div className="grid-item"><Card/></div>
+                  <div className="grid-item"><Card/></div>
+
+                  <div className="grid-item"><Card/></div>      
+                  <div className="grid-item"><Card/></div>   
+                  <div className="grid-item"><Card/></div>
+                  <div className="grid-item"><Card/></div>
+                  <div className="grid-item"><Card/></div>                
+                </div>
+              </div>
+            </div>
+          )*/
+          
+        }
+      }
+      
+      ReactDOM.render(
+        <Game />,
+        document.getElementById('root')
+      )
+
+    </script>
+  </body>
+
+  <!--REFERENCES: 
+   https://codepen.io/bitmapshades/pen/raOZMa
+   https://codepen.io/yigitcukuren/pen/GyxxVm?editors=0110
+   https://www.youtube.com/watch?v=fHosG9DpIcs&list=PLImOJ2OqvvkBvWlM7wNh7_gcjP_kPDxRc&index=8-->
+</html>
+
