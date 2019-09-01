@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.md-grid-basic [class*="mbsc-col"] {
+    padding-top: .5em;
+    padding-bottom: .4em;
+    background: #cfe0f3;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    color: #454b50;
+    margin: 0 1em;
+}
+
+.md-grid-basic .mbsc-row {
+    margin: 1em 3em;
+}
+
+.Card {
+  background-color: green;
+  padding: 5px;
+  margin: 5px;
+  background-image: url("deepseaKing.png");
+  background-size: cover;
+  width: 7em;
+  height: 10em;            
+  position: relative;
+  align-content: center;
+}
