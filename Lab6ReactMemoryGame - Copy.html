@@ -74,20 +74,21 @@
               side: "cardfront" //One punch character
             });
           }
+          
 
         }
 
         render() {         
           return (
-            <div className="Card">            
-              <div onClick={this.handleClick.bind(this)}>
+            <div className="Card" onClick={this.props.selectCard}>            
+              <div onClick={this.handleClick.bind(this)} > 
               {
-                (this.props.isBeingCompared==true || this.props.guessedRight==true) ? ( //if ()
+                (this.props.isBeingCompared==true || this.props.guessedRight==true) ? ( //if ()                  
                   <div >
                     <img className="OnePunchCharacter" src ={`CardImages/${this.props.image}`}/>
-                  </div>
+                  </div>                    
                 ) : ( //else 
-                  this.state.side == "cardfront" ? ( //if card front
+                  this.state.side == "Cardfront" ? ( //if card front
                     <div className="CardFront">
                       <img className="OnePunchCharacter" src ={`CardImages/${this.props.image}`}/>
                     </div> 
@@ -105,33 +106,23 @@
       }
 
       class CardsGrid extends React.Component{
-        constructor(props) {
-          super(props);  
-
-          this.state ={
-              selectedCoupleOfCards: [],
-              isComparing: false,
-              deckOfCards_: this.props.deckOfCards
-          }     
-        }        
 
         render(){
           //const cards = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
           return(
           <div className="firstDiv">
-            <div className="grid-container">                
+            <div className="grid-container">
             {
               //cards.map((card) => <Card></Card>)           
-              //this.props.deckOfCards.map((card, index) =>{
-                deckOfCards_.map((card, index) =>{
-                const isBeingCompared = this.state.selectedCoupleOfCards.indexOf(card) > -1;
-                
+              this.props.deckOfCards.map((card, index) =>{
+                const isBeingCompared = this.props.selectedCoupleOfCards.indexOf(card) > -1;
+                //console.log("isBeingCompared: "+isBeingCompared)
+                //console.log("guessedRight: "+card.guessedRight)
                 return <Card 
                 image={card.image} 
                 key={index}  
-                isBeingCompared = {isBeingCompared} 
-                //selectCard={(card) => this.props.selectCard(card)} 
-                selectCard = {(card) => this.selectCard(card)}
+                isBeingCompared = {isBeingCompared}
+                selectCard={() => this.props.selectCard(card)} //if "card" is added as a parameter in this arrow function it doesnt work.
                 guessedRight={card.guessedRight}
                 />  
               }) //image defined in cardsShuffleInGrid
@@ -141,50 +132,7 @@
           </div>
           )
         }
-
-        selectCard(card){
-          
-          if(this.state.isComparing || this.state.selectedCoupleOfCards.indexOf(card) > -1 || card.guessedRight)
-          {
-            return;
-          }
-
-          //spread the selected couple of cards on [0] and add the card on [1]. In this case the player should have selected a card first,and then select other.
-          const selectedCoupleOfCards = [...this.state.selectedCoupleOfCards,card]; 
-          this.setState({
-            selectedCoupleOfCards
-          })
-
-          if(selectedCoupleOfCards.length === 2){
-            this.compareCoupleOfCards(selectedCoupleOfCards);
-          }
-        }
-
-        compareCoupleOfCards(selectedCoupleOfCards){
-          this.setState({isComparing: true});
-
-          setTimeout(() => {
-            const[firstCard,secondCard] = selectedCoupleOfCards; //desctructuring array
-            let deckOfCards = this.props.deckOfCards;
-
-            if(firstCard.image === secondCard.image){ //if both cards have the same image
-              deckOfCards = deckOfCards.map((card) => {
-                if(card.image !== firstCard.image){
-                  return card;
-                }
-
-                return {...card, guessedRight:true}; //return card spreaded and update guessedRight of current card
-              });
-            }
-            /*if the player disnt guessed right, return everything as it was at the beginning of the function*/
-            this.setState({
-              selectedCoupleOfCards: [],
-              isComparing: false,
-              deckOfCards
-            })
-            //this.props.deckOfCards
-          }, 1000)
-        }
+        
 
       }
 
@@ -193,9 +141,9 @@
       const getInitState = () => {
         const deckOfCards = CardsShuffleInGrid();
         return{
-          deckOfCards
-          //selectedCoupleOfCards: [],
-          //isComparing: false
+          deckOfCards,
+          selectedCoupleOfCards: [],
+          isComparing: false
         };
       }
 
@@ -215,8 +163,8 @@
               <div>
                 <CardsGrid
                 deckOfCards={this.state.deckOfCards} 
-                //selectedCoupleOfCards = {this.state.selectedCoupleOfCards}
-                //selectCard = {(card) => this.selectCard(card)}
+                selectedCoupleOfCards = {this.state.selectedCoupleOfCards}
+                selectCard = {(card) => this.selectCard(card)}
                 />
               </div>
             </div>
@@ -224,13 +172,18 @@
         }
 
       //Selecting the cards
-        /*selectCard(card){
+        selectCard(card){
           
           if(this.state.isComparing || this.state.selectedCoupleOfCards.indexOf(card) > -1 || card.guessedRight)
           {
+            
             return;
+            
           }
 
+          //console.log("isCOmparing: "+this.state.isComparing)
+            console.log(" selectedCouple: "+(this.state.selectedCoupleOfCards.indexOf(card) > -1))
+            console.log("Guessed: "+card.guessedRight)
           //spread the selected couple of cards on [0] and add the card on [1]. In this case the player should have selected a card first,and then select other.
           const selectedCoupleOfCards = [...this.state.selectedCoupleOfCards,card]; 
           this.setState({
@@ -267,7 +220,7 @@
           }, 1000)
         }
 
-      }*/
+      }
       //-------------------------
       
       ReactDOM.render(
