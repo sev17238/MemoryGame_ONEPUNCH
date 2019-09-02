@@ -11,6 +11,7 @@
     <div id="root"></div>
     
     <script type="text/babel">
+
       // Modified Shuffle by Chris Coyier
       // https://css-tricks.com/snippets/javascript/shuffle-array/
       function shuffle(o) {
@@ -175,10 +176,8 @@
         selectCard(card){
           
           if(this.state.isComparing || this.state.selectedCoupleOfCards.indexOf(card) > -1 || card.guessedRight)
-          {
-            
-            return;
-            
+          {            
+            return;            
           }
 
           //console.log("isCOmparing: "+this.state.isComparing)
@@ -211,7 +210,7 @@
                 return {...card, guessedRight:true}; //return card spreaded and update guessedRight of current card
               });
             }
-            //if the player disnt guessed right, return everything as it was at the beginning of the function
+            //if the player didnt guessed right, return everything as it was at the beginning of the function
             this.setState({
               selectedCoupleOfCards: [],
               deckOfCards,
@@ -232,8 +231,14 @@
   </body>
 
   <!--REFERENCES: 
+   https://www.w3schools.com
    https://codepen.io/bitmapshades/pen/raOZMa
-   https://codepen.io/yigitcukuren/pen/GyxxVm?editors=0110
-   https://www.youtube.com/watch?v=fHosG9DpIcs&list=PLImOJ2OqvvkBvWlM7wNh7_gcjP_kPDxRc&index=8-->
+   https://codepen.io/yigitcukuren/pen/GyxxVm?editors=0010
+   https://www.youtube.com/watch?v=ZniVgo8U7ek
+   https://www.youtube.com/watch?v=fHosG9DpIcs&list=PLImOJ2OqvvkBvWlM7wNh7_gcjP_kPDxRc&index=8
+   https://glitch.com/edit/#!/hallowed-chime?path=index.html:156:47
+   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+   https://css-tricks.com/snippets/javascript/shuffle-array/-->
+
 </html>
 
