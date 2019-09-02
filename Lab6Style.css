@@ -1,3 +1,4 @@
+@import "http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css";
 body {
     background-image: url("BackGrounds/onepunchWallpaper3.jpg");
     background-size: cover;
@@ -6,13 +7,52 @@ body {
     padding: 0;
 }
 
+#box{
+    width: 500px;
+    overflow: hidden;
+    background: rgb(31, 29, 29);
+    box-shadow: 0 0 100px black;
+    opacity: 0.9;
+    border-radius: 10px;
+    top: 30%;
+    right: 35%;
+    /*transform: translate(85%,-350%);*/
+    z-index: 9999;
+    padding: 10px;
+    text-align: center;
+    position: absolute;
+    display: none;
+}
+#box span{
+    color: orangered;
+    font-size: 40px;
+    display: block;
+    margin: 20px 0;
+}
+#box h2{
+    color: rgb(255, 94, 0);
+    font: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    opacity: 0.7;
+}
+.close{
+    font-size: 18px;
+    color: rgb(119, 41, 13);
+    padding: 10px 20px;
+    cursor: pointer;
+    background: silver;
+    opacity: 0.9;
+    display: inline-block;
+    border-radius: 5px;
+}
+
 .OnePunchCharacter {
     width:100%;
     height:100%;
     position: relative;
     border-radius: 10px;
     cursor: pointer;
-    transform: scaleX(-1);
+    /*transform: scaleX(-1);*/
 }
 .OnePunchLogo {
     width:100%;
@@ -61,7 +101,7 @@ header{
     padding: 14px 25px;
     border: none;
     cursor: pointer;
-    opacity: 0.8;
+    opacity: 0.9;
     border-radius: 5px;
 }
 
