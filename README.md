@@ -21,8 +21,12 @@ This project features the following tools:
 - 🛠 **Babel** — ES6 syntax, React
 - 💅 **CSS** — Styled Components
 
-## Where can I play it?
-Go to this link: `34.210.35.174/17238/Lab6React/OnePunchMemory.html`
+## Installation
+1. Clone this repo using `https://github.com/sev17238/MemoryGame_ONEPUNCHMAN.git`
+2. Move to the appropriate directory: `cd MemoryGame_ONEPUNCHMAN`.<br />
+3. Run `Lab6ReactMemoryGame.html` file. <br />
+
+You can also play it here: `34.210.35.174/17238/Lab6React/OnePunchMemory.html`
 
 ## License
 No license.
