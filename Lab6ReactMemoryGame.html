@@ -15,27 +15,27 @@
     </div>
     <!-- CUSTOM ALERT BOX-->
     <div id="box">
-        <span class="ion-checkmarck-round"></span>
-        <h2>You won in XX tries!!</h2>
-        <a onclick="pop()" class="close">Close</a>
-      </div>
-      <!-- CUSTOM ALERT BOX-->
-    
+      <span class="ion-checkmarck-round"></span>
+      <h2>You won!! Check out your number of tries in the header!!</h2>
+      <a onclick="pop()" class="close">Close</a>
+    </div>
+    <!-- CUSTOM ALERT BOX-->
     
     
     <script type="text/babel">
 
       var c = 0
-      function pop(triess) {
+      function pop(tries) {
         if (c == 0){
           document.getElementById("box").style.display = "block"
-          //document.getElementById("h2").innerHTML =`You won in ${triess} tries!!!`;
+          /*document.getElementById("h2").innerHTML =`You won in 234234 tries!!!`;*/
           c = 1;
         }else{
           document.getElementById("box").style.display = "none"
           c = 0;
         }
       }
+
       // Modified Shuffle by Chris Coyier
       // https://css-tricks.com/snippets/javascript/shuffle-array/
       function shuffle(o) {
@@ -62,6 +62,18 @@
       };
       
               
+      /*class CustomAlert extends React.Component{
+        render(){
+          return(
+            <div id="box">
+              <span class="ion-checkmarck-round"></span>
+              <h2>You won in {this.props.tries} tries!!</h2>
+              <a onclick="pop()" class="close">Close</a>
+            </div>
+          )
+        }
+      }*/
+
       class HeaderBar extends React.Component{
         render(){
           return(
@@ -181,8 +193,12 @@
         }        
 
         render() {
+         /* <div>
+              <CustomAlert tries={this.state.tries}/>
+          </div>*/
           return (
             <div>
+              
               <div>
                 <HeaderBar tries={this.state.tries}
                 resetGame={() => this.resetGame()}/>
@@ -194,6 +210,7 @@
                 selectCard = {(card) => this.selectCard(card)}
                 />
               </div>
+              
             </div>
           );       
         }
@@ -207,8 +224,8 @@
           }
 
           //console.log("isCOmparing: "+this.state.isComparing)
-            console.log(" selectedCouple: "+(this.state.selectedCoupleOfCards.indexOf(card) > -1))
-            console.log("Guessed: "+card.guessedRight)
+          ///console.log(" selectedCouple: "+(this.state.selectedCoupleOfCards.indexOf(card) > -1))
+          ///console.log("Guessed: "+card.guessedRight)
           //spread the selected couple of cards on [0] and add the card on [1]. In this case the player should have selected a card first,and then select other.
           const selectedCoupleOfCards = [...this.state.selectedCoupleOfCards,card]; 
           this.setState({
@@ -278,7 +295,6 @@
    https://codepen.io/bitmapshades/pen/raOZMa
    https://codepen.io/yigitcukuren/pen/GyxxVm?editors=0010
    https://www.youtube.com/watch?v=ZniVgo8U7ek
-   https://www.youtube.com/watch?v=fHosG9DpIcs&list=PLImOJ2OqvvkBvWlM7wNh7_gcjP_kPDxRc&index=8
    https://glitch.com/edit/#!/hallowed-chime?path=index.html:156:47
    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
    https://css-tricks.com/snippets/javascript/shuffle-array/-->
